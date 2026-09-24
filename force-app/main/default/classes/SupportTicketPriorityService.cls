@@ -73,6 +73,7 @@ public with sharing class SupportTicketPriorityService {
             }
             if (selected != null) {
                 ticket.Assigned_Agent__c = selected;
+                ticket.OwnerId = selected;
                 workload.put(selected, workload.get(selected) + 1);
             }
         }
