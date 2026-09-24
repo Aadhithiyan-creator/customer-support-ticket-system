@@ -18,6 +18,7 @@ private class SupportTicketPriorityServiceTest {
     @IsTest static void bulkInsertAndNoAgentIsSafe() {
         List<Support_Ticket__c> tickets = new List<Support_Ticket__c>();
         for (Integer i = 0; i < 200; i++) tickets.add(new Support_Ticket__c(Description__c='Payment failed'));
+        Id currentAdminId = UserInfo.getUserId();
         Test.startTest();
         insert tickets;
         Test.stopTest();
@@ -42,12 +43,16 @@ private class SupportTicketPriorityServiceTest {
             new PermissionSetAssignment(AssigneeId=agents[1].Id, PermissionSetId=agentPermission.Id)
         };
 
+        Id currentAdminId = UserInfo.getUserId();
         Test.startTest();
-        System.runAs(agents[0]) {
-            insert new Support_Ticket__c(Description__c='Question about an invoice', Status__c='New', Assigned_Agent__c=agents[0].Id);
-        }
         Support_Ticket__c unassigned = new Support_Ticket__c(Description__c='How do I update a profile?');
-        System.runAs(agents[1]) { insert unassigned; }
+        System.runAs(agents[1]) {
+            insert new List<Support_Ticket__c>{
+                new Support_Ticket__c(Description__c='Question about an invoice', Status__c='New', Assigned_Agent__c=agents[0].Id),
+                new Support_Ticket__c(Description__c='Question about an account', Status__c='New', Assigned_Agent__c=currentAdminId)
+            };
+            insert unassigned;
+        }
         Test.stopTest();
 
         Support_Ticket__c saved = [SELECT Assigned_Agent__c, OwnerId FROM Support_Ticket__c WHERE Id=:unassigned.Id];
