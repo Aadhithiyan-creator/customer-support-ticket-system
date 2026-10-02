@@ -1,6 +1,15 @@
-# Customer Support Ticket Intelligence
+# Customer Support Ticket Priority Prediction and Automated Assignment System Using Agentforce
 
 Salesforce DX source for a support-ticket prioritization and assignment application. The project uses a custom `Support_Ticket__c` object, Apex classification, least-loaded agent assignment, and a record-triggered Flow that creates one urgent follow-up Task for each high-priority ticket.
+
+## Project Demo
+
+[Watch the Project Demo](https://drive.google.com/drive/folders/1SyGdE2cqw6kdBoHqnuCBzOsz1SRcnYr9?usp=sharing)
+
+## Project Documents
+
+- [Project document](docs/customer_support_ticket_priority_prediction_and_automated_assignment_system_using_agentforce.pdf)
+- [Project document (NM)](docs/customer_support_ticket_priority_prediction_and_automated_assignment_system_using_agentforce_nm.pdf)
 
 ## What is included
 
